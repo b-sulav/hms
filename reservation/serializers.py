@@ -4,7 +4,7 @@ from .services import check_availability
 from .models import Reservation
 
 class ReservationSerializer(serializers.ModelSerializer):
-    class meta:
+    class Meta:
         model = Reservation
         fields = '__all__'
 

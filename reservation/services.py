@@ -4,7 +4,6 @@ from django.db.models import QuerySet
 from room.models import Room
 from .models import Reservation
 from guest.models import Guest
-from guest.services import create_guest
 from datetime import date
 
 
@@ -14,7 +13,7 @@ def check_availability(num_guests: int, check_in: date, check_out: date) -> Quer
         raise ValidationError("Check-in date must be earlier than check-out date.")
     if check_in < today:
         raise ValidationError("Check-in date cannot be in the past.")
-    suitable_rooms = Room.objects.filter(room_type__capacity__gte=num_guests)    
+    suitable_rooms = Room.objects.filter(room_type__capacity__gte=num_guests)
     conflicting_reservations = Reservation.objects.filter(
         check_in__lt=check_out,
         check_out__gt=check_in
@@ -45,6 +44,8 @@ def check_availability(num_guests: int, check_in: date, check_out: date) -> Quer
 #         check_out=check_out,
 #         status='Pending',
 #     )
+
+
 
 # def controller(fname: str, lname: str, phone: str, email: str, room_id: int, check_in: date, check_out: date) -> Reservation:
 #     guest = create_guest(fname, lname, phone, email)

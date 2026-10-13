@@ -1,12 +1,13 @@
 from .models import Room, RoomType
 from django.db import models
+from rest_framework import serializers
 
-class RoomSerializer(models.Model):
-    class meta:
+class RoomSerializer(serializers.ModelSerializer):
+    class Meta:
         model = Room
-        fields = '__all__'
+        fields = ['room_no','room_type','status']
 
-class RoomTypeSerializer(models.Model):
-    class meta:
+class RoomTypeSerializer(serializers.ModelSerializer):
+    class Meta:
         model = RoomType
         fields = '__all__'
