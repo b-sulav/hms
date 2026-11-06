@@ -1,26 +1,26 @@
-"""
-URL configuration for hrs project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, include
+# from rest_framework.authtoken.views import ObtainAuthToken
+
+# Import view classes from each app
+from auth_app.views import LoginView, LogoutView, CurrentUserView
+from reservation.views import CheckAvailabilityAPIView, ReservationAPIView, ReservationDetailAPIView, CreateReservationWithGuestAPIView
+from guest.views import GuestAPIView, GuestDetailAPIView
+from room.views import RoomAPIView, RoomDetailAPIView, RoomTypeAPIView, RoomTypeDetailAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/auth/', include('auth_app.urls')),
-    path('api/reservation/', include('reservation.urls')) ,
-    path('api/guest/', include('guest.urls')),
-    path('api/room/', include('room.urls')),
+    path('api/auth/login/', LoginView.as_view(), name='api-login'),
+    path('api/auth/logout/', LogoutView.as_view(), name='api-logout'),
+    path('api/auth/me/', CurrentUserView.as_view(), name='api-current-user'),
+    path('api/reservation/check-availability/', CheckAvailabilityAPIView.as_view()),
+    path('api/reservation/create-with-guest/', CreateReservationWithGuestAPIView.as_view()),
+    path('api/reservation/', ReservationAPIView.as_view()),
+    path('api/reservation/<int:pk>/', ReservationDetailAPIView.as_view()),
+    path('api/guest/', GuestAPIView.as_view()),
+    path('api/guest/<int:pk>/', GuestDetailAPIView.as_view()),
+    path('api/room/', RoomAPIView.as_view()),
+    path('api/room/<int:pk>/', RoomDetailAPIView.as_view()),
+    path('api/room/types/', RoomTypeAPIView.as_view()),
+    path('api/room/types/<int:pk>/', RoomTypeDetailAPIView.as_view()),
 ]

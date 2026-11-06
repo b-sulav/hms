@@ -40,11 +40,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'django_supabase',
     'guest',
     'reservation',
     'room',
     'auth_app',
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -78,10 +78,13 @@ WSGI_APPLICATION = 'hrs.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+        'ENGINE': 'django_supabase.db.engine.SupabasePostgreSQLEngine',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': os.getenv('SUPABASE_DB_PASSWORD'),
+        'HOST': os.getenv('SUPABASE_DB_HOST', 'db.YOUR_PROJECT.supabase.co'),
+        'PORT': os.getenv('SUPABASE_DB_PORT', 5432),
+    }}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
